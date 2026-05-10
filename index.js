@@ -7,9 +7,9 @@ const {
 const { Boom } = require("@hapi/boom");
 const fs = require("fs");
 
-// =========================
+
 // DATOS
-// =========================
+
 
 const DAMAGE_TABLES = {
   d6: [5,10,15,20,25,30],
@@ -48,9 +48,6 @@ function applyPrecision(value, precision) {
   return Math.max(1, Math.min(20, result));
 }
 
-// =========================
-// SESIÓN
-// =========================
 
 const SESSION_FILE = "session.json";
 
@@ -62,9 +59,6 @@ function saveSession(state) {
   }
 }
 
-// =========================
-// BOT
-// =========================
 
 async function startBot() {
 
@@ -106,9 +100,9 @@ async function startBot() {
     }
   });
 
-  // =========================
+
   // MENSAJES
-  // =========================
+
 
   sock.ev.on("messages.upsert", async ({ messages }) => {
     try {
@@ -139,18 +133,18 @@ async function startBot() {
       const multMatch = lowerText.match(/\*(\d+)/);
       const multiplier = multMatch ? parseInt(multMatch[1]) : 1;
 
-      // =========================
+
       // MONEDA
-      // =========================
+
       if (lowerText.startsWith("!moneda") || lowerText.startsWith("!coin")) {
         const result = Math.random() < 0.5 ? "Cara" : "Cruz";
         await sock.sendMessage(msg.key.remoteJid, { text: `🪙 ${result}` });
         return;
       }
 
-      // =========================
+
       // D100
-      // =========================
+
       if (lowerText.startsWith("!d100")) {
         const roll = rollDice(100);
         await sock.sendMessage(msg.key.remoteJid, { 
@@ -159,9 +153,8 @@ async function startBot() {
         return;
       }
 
-      // =========================
       // ATAQUE (VISUAL COMPLETO)
-      // =========================
+
       if (lowerText.startsWith("!ataque")) {
 
         const d20Match = lowerText.match(/(\d*)d20/);
@@ -255,9 +248,9 @@ async function startBot() {
         return;
       }
 
-      // =========================
+
       // MULTI-DADOS (VISUAL)
-      // =========================
+
       if (/^!\d+d\d+/.test(lowerText)) {
 
         const match = lowerText.match(/(\d+)d(\d+)/);
@@ -308,9 +301,9 @@ async function startBot() {
         return;
       }
 
-      // =========================
+
       // D20 FIJO (VISUAL)
-      // =========================
+
       const fixedD20 = lowerText.match(/d20\s+(\d+)/);
       if (fixedD20) {
 
@@ -363,9 +356,9 @@ async function startBot() {
         return;
       }
 
-      // =========================
+
       // TIRADA SIMPLE (VISUAL)
-      // =========================
+
       const match = lowerText.match(/d(\d+)/);
       if (!match) return;
 
