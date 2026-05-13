@@ -13,8 +13,8 @@ const fs = require("fs");
 
 const DAMAGE_TABLES = {
   d6: [5,10,15,20,25,30],
-  d8: [10,20,25,30,35,40,50,60],
-  d10: [20,35,40,50,60,70,80,90,100,120],
+  d8: [10,20,25,30,35,40,45,60],
+  d10: [20,30,40,50,60,70,80,90,100,120],
   d12: [40,70,85,100,115,130,145,160,175,190,210,240],
   d14: [80,110,140,170,200,230,260,290,320,350,380,410,440,480]
 };
@@ -44,7 +44,7 @@ function calculateDamage(dice, roll) {
 }
 
 function applyPrecision(value, precision) {
-  let result = value + (precision * 3);
+  let result = value + (precision);
   return Math.max(1, Math.min(20, result));
 }
 
@@ -204,7 +204,7 @@ async function startBot() {
             response += ` / ${r2} (${tipo}) → ${beforePrecision}`;
           }
           if (precision !== 0) {
-            response += ` + (${precision}×3) = ${hit}`;
+            response += ` + (${precision}) = ${hit}`;
           }
           response += `\nResultado: ${getD20Result(hit)}\n`;
 
@@ -325,7 +325,7 @@ async function startBot() {
           response += ` / ${r2} → ${beforePrecision}`;
         }
         if (precision !== 0) {
-          response += ` + (${precision}×3) = ${hit}`;
+          response += ` + (${precision}) = ${hit}`;
         }
 
         response += `\nBase daño: ${damage}\n`;
@@ -380,7 +380,7 @@ async function startBot() {
 
       if (sides === 20) {
         if (precision !== 0) {
-          response += `Precisión: (${precision}×3)\n`;
+          response += `Precisión: (${precision})\n`;
         }
         response += getD20Result(final);
       } else if (sides === 4) {
